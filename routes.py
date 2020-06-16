@@ -11,7 +11,6 @@ def display_books(bookname):
     form = AddReview(request.form)
     book = Books.query.filter_by(title=bookname).first()
     if request.method == 'POST':
-        print('PROOF!!!')
         added = verify_review(form=request.form, book=book)
         if added:
             return redirect(url_for('home'))
@@ -22,11 +21,21 @@ def display_books(bookname):
                             user=current_user, form=AddReview(None),
                             message='Add a review for this book?')
 
+@app.route('/reviews/<id>')
+@login_required
+def display_review(id):
+    try:
+        reviews = Reviews.query.filter_by(bookid=id).all()
+    except:
+        reviews = []
+    return render_template('display_review.html', reviews=reviews)
+
 @app.route('/authors/<authorname>')
 @login_required
 def display_author(authorname):
     books = Books.query.filter_by(author=authorname).all()
-    return render_template('display_author.html', books=books, author=authorname)
+    return render_template('display_author.html', books=books,
+                            author=authorname)
 
 def verify_review(form, book):
     rating = form.get('rating')
@@ -59,16 +68,24 @@ def add_book(form):
         book.year = year
     review = form.get('review')
     rating = form.get('rating')
-    if rating:
-        rating = int(form.get('rating'))
-        book.num_rating = 1
-        book.avg_rating = rating
         
     try:
         db.session.add(book)
         db.session.commit()
     except Exception as e:
         print(e)
+        return False
+    book = Books.query.filter_by(title=title).first()
+    if rating:
+        rating = int(form.get('rating'))
+        book.num_rating = 1
+        book.avg_rating = rating
+        review = Reviews(rating=rating, text=review, bookid=book.id)
+    try:
+        db.session.add(book)
+        db.session.add(review)
+        db.session.commit()
+    except:
         return False
     return True
 

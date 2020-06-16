@@ -9,12 +9,20 @@
         <tr>
 	  <th scope="col">Title</th>
 	  <th scope="col">Author</th>
+	  <th scope="col">Publication Year</th>
+	  <th scope="col">Number of ratings</th>
+	  <th scope="col">Average rating</th>
+	  <th scope="col">Reviews</th>
 	</tr>
     </thead>
     <tbody>
         <tr>
 	    <td>{{ book.title }}</td>
 	    <td>{{ book.author }}</td>
+	    <td>{{ book.year }}</td>
+	    <td>{{ book.num_rating }}</td>
+	    <td>{{ book.avg_rating }}</td>
+	    <td><a href="{{ url_for('display_review', id=book.id) }}">Reviews</a></td>
 	</tr>
     </tbody>
 </table>

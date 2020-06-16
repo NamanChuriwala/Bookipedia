@@ -1,0 +1,24 @@
+{% extends "nav-bar.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+	  <th scope="col">#</th>
+	  <th scope="col">Rating</th>
+	  <th scope="col">Review</th>
+	</tr>
+    </thead>
+    <tbody>
+	{% for review in reviews %}
+        <tr>
+	    <th>{{ loop.index }}</th>
+	    <td>{{ review.rating }}</td>
+	    <td>{{ review.text }}</td>
+	</tr>
+	{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

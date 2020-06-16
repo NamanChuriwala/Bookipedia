@@ -20,6 +20,7 @@
 	  <th scope="col">Publication year</th>
 	  <th scope="col">Number of ratings</th>
 	  <th scope="col">Average Rating</th>
+	  <th scope="col">Reviews</th>
 	</tr>
     </thead>
     <tbody>
@@ -31,6 +32,7 @@
 	    <td>{{ book.year }}</td>
 	    <td>{{ book.num_rating }}</td>
 	    <td>{{ book.avg_rating }}</td>
+	    <td><a href="{{ url_for('display_review', id=book.id) }}">Reviews</a></td>
 	</tr>
 	{% endfor %}
     </tbody>
