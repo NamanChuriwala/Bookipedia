@@ -1,0 +1,39 @@
+{% extends "nav-bar.html" %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% block content %}
+<h1> {{ message }} </h1>
+<form id="new-book" method="POST" class="needs-validation">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{ form.title.label }} {{ form.title(class_="form-control") }}
+    </div>
+    {{ form.submit(class_="btn btn-primary") }}
+</form>
+
+{% if books %}
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+	  <th scope="col">#</th>
+	  <th scope="col">Title</th>
+	  <th scope="col">Author</th>
+	  <th scope="col">Publication year</th>
+	  <th scope="col">Number of ratings</th>
+	  <th scope="col">Average Rating</th>
+	</tr>
+    </thead>
+    <tbody>
+	{% for book in books %}
+        <tr>
+	    <th>{{ loop.index }}</th>
+	    <td><a href="{{ url_for('display_books', bookname=book.title) }}">{{ book.title }}</a></td>
+	    <td><a href="{{ url_for('display_author', authorname=book.author) }}">{{ book.author }}</a></td>
+	    <td>{{ book.year }}</td>
+	    <td>{{ book.num_rating }}</td>
+	    <td>{{ book.avg_rating }}</td>
+	</tr>
+	{% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

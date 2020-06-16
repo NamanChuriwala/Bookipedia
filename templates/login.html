@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<h1>{{ message }}</h1>
+<form id="login" method="POST" class="needs-validation">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{ form.username.label }}  {{form.username(class_="form-control")}}
+	{{ form.password.label }}  {{form.password(class_="form-control")}}
+    </div>
+    {{ form.submit(class_="btn btn-primary") }}
+</form>

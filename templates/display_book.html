@@ -1,0 +1,33 @@
+{% extends "nav-bar.html" %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% block content %}
+<h1> {{ book.title }} </h1>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+	  <th scope="col">Title</th>
+	  <th scope="col">Author</th>
+	</tr>
+    </thead>
+    <tbody>
+        <tr>
+	    <td>{{ book.title }}</td>
+	    <td>{{ book.author }}</td>
+	</tr>
+    </tbody>
+</table>
+
+<h2>{{ message }}</h2>
+{% if form %}
+<form id="new-review" method="POST" class="needs-validation">
+    {{ form.csrf_token }}
+    <div class="form-group">
+    	{{ form.rating.label }} {{ form.rating(class_="form-control")}}
+    	{{ form.review.label }} {{ form.review(class_="form-control") }}
+    </div>
+    {{ form.submit(class_="btn btn-primary") }}
+</form>
+{% endif %}
+{% endblock %}
