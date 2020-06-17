@@ -4,7 +4,7 @@ from flask_login import LoginManager
 import os
 from dotenv import load_dotenv
 
-load_dotenv('project1.env')
+load_dotenv('./project1.env')
 SECRET_KEY = os.urandom(32)
 DB_URI = os.environ.get('DB_URI')
 

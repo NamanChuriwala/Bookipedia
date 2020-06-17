@@ -33,3 +33,12 @@ class Reviews(db.Model):
     text = db.Column(db.Text())
     rating = db.Column(db.Integer)
     bookid = db.Column(db.ForeignKey('books.id'), nullable=False)
+
+class GoogleUser(UserMixin, db.Model):
+    __tablename__ = 'google_users'
+    id = db.Column(db.Integer, primary_key=True,
+                   autoincrement=True)
+    userid = db.Column(db.Text())
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    #profile_pic = db.Column(db.Text())

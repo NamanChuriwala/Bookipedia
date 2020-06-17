@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import requests
 
-load_dotenv('../1.env')
+load_dotenv('./project1.env')
 key = os.environ.get('key')
 
 def get_rating(isbn):

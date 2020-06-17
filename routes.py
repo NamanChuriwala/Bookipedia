@@ -86,6 +86,7 @@ def add_book(form):
         print(e)
         return False
     book = Books.query.filter_by(title=title).first()
+    print('Book', book)
     if rating:
         rating = int(form.get('rating'))
         book.num_rating = 1
@@ -114,7 +115,11 @@ def find_book(form):
 @app.route('/')
 @login_required
 def home():
-    return render_template('home.html')
+    try:
+        print(current_user.name, current_user.email)
+    except:
+        pass
+    return render_template('home.html', user=current_user)
 
 @app.route('/migrate')
 def migrate():

@@ -45,3 +45,6 @@ class LoginForm(FlaskForm):
                             validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
+
+class GoogleLogin(FlaskForm):
+    submit = SubmitField('Login using Google!')
