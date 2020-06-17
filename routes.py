@@ -4,21 +4,31 @@ from flask import request, redirect, url_for
 from flask_login import current_user, login_required, logout_user
 from models import db, Books, Reviews
 from forms import *
+import pandas as pd
+from goodreads_api import get_rating
 
 @app.route('/books/<bookname>', methods=['GET', 'POST'])
 @login_required
 def display_books(bookname):
     form = AddReview(request.form)
     book = Books.query.filter_by(title=bookname).first()
+    isbn = book.isbn
+    ratings = get_rating(isbn)
+    if ratings:
+        num_rating, avg_rating = ratings[0], ratings[1]
+    else:
+        num_rating, avg_rating = None, None
     if request.method == 'POST':
         added = verify_review(form=request.form, book=book)
         if added:
             return redirect(url_for('home'))
         return render_template('display_book.html', book=book,
                                 user=current_user, form=AddReview(None),
+                                num_rating=num_rating, avg_rating=avg_rating,
                                 message='Could not add review!')
     return render_template('display_book.html', book=book,
                             user=current_user, form=AddReview(None),
+                            num_rating=num_rating, avg_rating=avg_rating,
                             message='Add a review for this book?')
 
 @app.route('/reviews/<id>')
@@ -105,6 +115,22 @@ def find_book(form):
 @login_required
 def home():
     return render_template('home.html')
+
+@app.route('/migrate')
+def migrate():
+    df = pd.read_csv('../books.csv')
+    count = 0
+    for i in range(len(df)):
+        row = df.loc[i]
+        book = Books(isbn=row.isbn, title=row.title,
+                     author=row.author, year=int(row.year))
+        try:
+            db.session.add(book)
+            count += 1
+        except:
+            pass
+    db.session.commit()
+    return {'Inserted Successfully': count}
 
 @app.route('/add_books', methods=['GET', 'POST'])
 @login_required

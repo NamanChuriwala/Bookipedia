@@ -5,6 +5,12 @@ import requests
 load_dotenv('../1.env')
 key = os.environ.get('key')
 
-res = requests.get("https://www.goodreads.com/book/review_counts.json",
-                    params={"key": key, "isbns": "9781632168146"})
-print(res.json())
+def get_rating(isbn):
+    try:
+        res = requests.get("https://www.goodreads.com/book/review_counts.json",
+                    params={"key": key, "isbns": isbn})
+        json = res.json()
+        num_rating, avg_rating = json['books'][0]['ratings_count'], json['books'][0]['average_rating']
+        return num_rating, avg_rating
+    except:
+        return 0

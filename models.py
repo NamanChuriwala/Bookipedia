@@ -6,10 +6,10 @@ class Books(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     reviews = db.relationship('Reviews', backref='book', lazy=True)
-    title = db.Column(db.String(100), nullable=False, unique=True)
+    title = db.Column(db.String(100), nullable=False)
     isbn = db.Column(db.String(20))
     year = db.Column(db.Integer)
-    author = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100))
     num_rating = db.Column(db.Integer, default=0)
     avg_rating = db.Column(db.Float, default=0)
 

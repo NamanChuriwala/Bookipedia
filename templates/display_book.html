@@ -13,6 +13,8 @@
 	  <th scope="col">Number of ratings</th>
 	  <th scope="col">Average rating</th>
 	  <th scope="col">Reviews</th>
+	  <th scope="col">Goodreads number of ratings</th>
+	  <th scope="col">Goodreads average rating</th>
 	</tr>
     </thead>
     <tbody>
@@ -23,6 +25,8 @@
 	    <td>{{ book.num_rating }}</td>
 	    <td>{{ book.avg_rating }}</td>
 	    <td><a href="{{ url_for('display_review', id=book.id) }}">Reviews</a></td>
+	    <td>{{ num_rating }}</td>
+	    <td>{{ avg_rating }}</td>
 	</tr>
     </tbody>
 </table>
